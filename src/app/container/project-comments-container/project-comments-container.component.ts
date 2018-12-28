@@ -4,7 +4,8 @@ import {UserService} from '../../user/user.service';
 import {Observable} from 'rxjs';
 import {Comment, CommentUpdate, Project, User} from '../../model';
 import {map, take} from 'rxjs/operators';
-
+import {combineLatest} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'mac-project-comments-container',
@@ -18,7 +19,9 @@ export class ProjectCommentsContainerComponent {
   selectedProject: Observable<Project>;
   projectComments: Observable<Comment[]>;
 
-  constructor(private projectService: ProjectService, private userService: UserService) {
+  constructor(private projectService: ProjectService,
+              private userService: UserService,
+              private route: ActivatedRoute) {
     this.user = userService.getCurrentUser();
     this.selectedProject = projectService.getSelectedProject();
     this.projectComments = this.selectedProject
@@ -53,3 +56,39 @@ export class ProjectCommentsContainerComponent {
       });
   }
 }
+
+/*
+constructor(private projectService: ProjectService,
+  private route: ActivatedRoute,
+  private router: Router) {
+  this.selectedProject = combineLatest(
+    projectService.getProjects(),
+    route.params
+  ).pipe(
+    map(([projects, routeParams]) =>
+      projects.find((project) => project.id === +routeParams.projectId)
+    )
+  );
+
+  this.activeTab = combineLatest(
+    this.selectedProject,
+    route.url
+  ).pipe(
+    map(([project]) =>
+      this.tabs.find((tab) =>
+        router.isActive(
+          `/projects/${project.id}/${tab.id}`,
+          false
+        )
+      )
+    )
+  );
+}
+
+updateProject(project: Project) {
+  this.projectService.updateProject(project);
+}
+
+
+}
+*/

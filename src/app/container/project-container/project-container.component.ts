@@ -27,8 +27,8 @@ export class ProjectContainerComponent {
   }
 
   constructor(private projectService: ProjectService,
-    private route: ActivatedRoute,
-    private router: Router) {
+              private route: ActivatedRoute,
+            private router: Router) {
     this.selectedProject = combineLatest(
       projectService.getProjects(),
       route.params
@@ -39,18 +39,18 @@ export class ProjectContainerComponent {
     );
 
     this.activeTab = combineLatest(
-      this.selectedProject,
+      this.selectProject,
       route.url
     ).pipe(
       map(([project]) =>
         this.tabs.find((tab) =>
           router.isActive(
-            `/projects/${project.id}/${tab.id}`,
+            `/projects/${project}/${tab.id}`,
             false
           )
         )
       )
-    );
+    )
   }
 
   updateProject(project: Project) {
