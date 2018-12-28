@@ -1,6 +1,7 @@
 import {Route} from '@angular/router';
 import {ProjectContainerComponent} from './container/project-container/project-container.component';
-
+import {TaskListContainerComponent} from './tasks/task-list/task-list.component';
+import {ProjectCommentsContainerComponent} from './container/project-container/project-container.component';
 export const routes: Route[] = [{
   path: 'projects/:projectId',
   component: ProjectContainerComponent,
